@@ -22,13 +22,13 @@ char sayfa[]= "HTTP/1.1 200 OK\r\n"
 
 int main(int argc, char *argv[]){
 	
-	
-	struct sockaddr_in sunucu_addr, client_addr; //sockaddr_in türünde server ve client
-	socklen_t sin_len = sizeof(client_addr); //client_addr sizeof operatoru ile boyutu 
-	int a_server, a_client;
 	char mesaj[2048]; //2 byte'lık alan
 	int resim;
 	int on = 1;
+	struct sockaddr_in adam, client_addr; //sockaddr_in türünde server ve client
+	socklen_t sin_len = sizeof(client_addr); //client_addr sizeof operatoru ile boyutu 
+	int a_server, a_client;
+	
 	a_server = socket(AF_INET, SOCK_STREAM, 0); // IPV4 ve TCP 
 	//if kosulu ile hata kontrolu
 	if(a_server < 0){ //eksi bir donerse hata var demektir
@@ -37,12 +37,12 @@ int main(int argc, char *argv[]){
 	}
 	setsockopt(a_server, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(int)); // sizeof int turu boyutu
 	
-	sunucu_addr.sin_family = AF_INET; //ipv4
-	sunucu_addr.sin_addr.s_addr= INADDR_ANY; //kendi ipsini
-	sunucu_addr.sin_port = htons(8010); //host to network short ile soket portu 8010
+	adam.sin_family = AF_INET; //ipv4
+	adam.sin_addr.s_addr= INADDR_ANY; //kendi ipsini
+	adam.sin_port = htons(8010); //host to network short ile soket portu 8010
 
 	//if kosulu ile hata var mı kontrol ediyoruz
-	if(bind(a_server, (struct sockaddr *) &sunucu_addr, sizeof(sunucu_addr)) ==-1){ //bind islevinin geri donus degeri -1 ise hata var demektir
+	if(bind(a_server, (struct sockaddr *) &adam, sizeof(adam)) ==-1){ //bind islevinin geri donus degeri -1 ise hata var demektir
 	perror("bind");//hata yaz
 	close(a_server);//serveri kapat
 	exit(1); // basarisiz durumlarda exit 1
